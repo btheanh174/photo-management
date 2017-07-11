@@ -1,0 +1,24 @@
+﻿
+@using PhotoManager.Models;
+@{
+    ViewBag.Title = "Upload";
+    var user = Session["User"] as USER;
+}
+
+		<section>
+           
+        @using (Html.BeginForm("UploadImage", "Home", FormMethod.Post, new { enctype = "multipart/form-data", id = "dropzoneForm", @class = "dropzone" }))
+        {
+                <div class="dz-message">
+                    <div class="drag-icon-cph">
+                        <i class="material-icons">touch_app</i>
+                    </div>
+                    <h3>Drop files here or click to upload.</h3>
+                    <em>(This is just a demo dropzone. Selected files are <strong>not</strong> actually uploaded.)</em>
+                </div>
+                <div class="fallback">
+                    <input name="file" type="file" multiple />
+                </div>
+                <input type="submit" value="Upload" />
+        }
+		</section>

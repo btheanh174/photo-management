@@ -1,0 +1,60 @@
+@model PhotoManager.Models.USER
+@{
+    ViewBag.Title = "Sign Up";
+}
+@section activeregister {
+   class ="active"
+}
+
+		
+		<section>	
+            <div class="container">
+                <div class="col-md-12 animate-box">
+                    <div class="row">
+                        <div class="containerlg">
+                            <div class="card"></div>
+                            <div class="card">
+                                <h1 class="title">Register</h1>
+                                @using (Html.BeginForm("signup", "Home", FormMethod.Post))
+                                      {
+                                    @Html.AntiForgeryToken()
+                                    @Html.ValidationSummary(true)
+                                <form>
+                                    <div class="input-containerlg">
+                                        @Html.TextBoxFor(u => u.IDUSER, new { @type = "text", @id = "Username", @required = "required" })
+                                        <label for="Username">Username</label>
+                                        <div class="bar"></div>
+                                    </div>
+                                    <div class="input-containerlg">
+                                        @Html.TextBoxFor(u => u.NAME, new { @type = "text", @id = "name", @required = "required" })
+                                        <label for="name">Name</label>
+                                        <div class="bar"></div>
+                                    </div>
+                                    <div class="input-containerlg">
+                                        @Html.TextBoxFor(u => u.PASSWORD, new { @type = "password", @id = "Password", @required = "required" })
+                                        <label for="Password">Password</label>
+                                        <div class="bar"></div>
+                                    </div>
+                                    <div class="input-containerlg">
+                                        <input type="password" id="Repeat Password" required="required">
+                                        <label for="Repeat Password">Repeat Password</label>
+                                        <div class="bar"></div>
+                                    </div>
+                                    <div class="input-containerlg">
+                                        @Html.TextBoxFor(u => u.MAIL, new { @type = "text", @id = "mail", @required = "required" })
+                                        <label for="mail">Email</label>
+                                        <div class="bar"></div>
+                                    </div>
+                                    <div class="button-containerlg">
+                                        <button><span>Register</span></button>
+                                    </div>
+                                    
+                                </form>
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+    </section>

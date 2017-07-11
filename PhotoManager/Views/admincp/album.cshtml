@@ -1,0 +1,99 @@
+﻿@model IEnumerable<PhotoManager.Models.ALBUM>
+
+@{
+    ViewBag.Title = "album";
+    
+    Layout = "~/Views/Shared/_admin.cshtml";
+}
+@section css {
+        <!-- Sweetalert Css -->
+<link href="~/Content/Admin/plugins/sweetalert/sweetalert.css" rel="stylesheet" />
+
+}
+@section js {
+        <!-- SweetAlert Plugin Js -->
+<script src="~/Content/Admin/plugins/sweetalert/sweetalert.min.js"></script>
+}
+<div class="block-header">
+    <h2>ALBUM</h2>
+</div>
+<!-- Basic Examples -->
+<div class="row clearfix">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="card">
+            <div class="header">
+                <h2>
+                    BASIC EXAMPLE 
+                </h2>
+               
+            </div>
+            <div class="body">
+                
+                @if (Session["error"]!=null)
+                {
+                    <div class="alert alert-danger">
+                        <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                        @Html.ValidationSummary(false, "Errors: Has Photo in Album ")
+                    </div>
+                    Session["error"] = null;
+                }
+               
+                <table class="table table-bordered table-striped table-hover js-basic-example dataTable">
+                    <thead>
+                    <tr>
+                        <th>IDALBUM</th>
+                        <th>NameAlbum</th>
+                        <th>User</th>
+
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tfoot>
+                    <tr>
+
+                        <th>IDALBUM</th>
+                        <th>NameAlbum</th>
+                        <th>User</th>
+
+                        <th>Description</th>
+                        <th>Action</th>
+                    </tr>
+                    </tfoot>
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IDALBUM)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IDUSER)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.NAMEALBUM)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DESCRIPTION_)
+                            </td>
+
+                            <td>
+                                <a href="@Url.Action("deletealbum", new {id = item.IDALBUM})" type="button" class="btn bg-red waves-effect">
+                                    <i class="material-icons">delete</i>
+                                </a>
+
+                                <a href="@Url.Action("editalbum", new {id = item.IDALBUM})" type="button" class="btn bg-purple  waves-effect">
+                                    <i class="material-icons">mode_edit</i>
+                                </a>
+
+
+                            </td>
+                        </tr>
+                    }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,134 @@
+﻿@using PhotoManager.Models;
+@{
+    var user = Session["User"] as USER;
+    PhotoEntities dc = new PhotoEntities();
+    int idalbum = 0;
+    if (user != null) { 
+        var AlbumList = dc.ALBUMs.Where(s => s.IDUSER == user.IDUSER);
+        idalbum = AlbumList.First().IDALBUM;
+    }
+    
+}
+<!DOCTYPE html>
+<html lang="en">
+	<head runat="server">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>@ViewBag.Title - PhotoUpload</title>
+
+  
+
+  	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+  	<link rel="shortcut icon" href="favicon.ico">
+
+  	<!-- Google Webfont -->
+	<link href='../../Content/Home/css/fgoogle.css' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+	<!-- Themify Icons -->
+	<link rel="stylesheet" href="../../Content/Home/css/themify-icons.css">
+	<!-- Bootstrap -->
+	<link rel="stylesheet" href="../../Content/Home/css/bootstrap.css">
+	<!-- Owl Carousel -->
+	<link rel="stylesheet" href="../../Content/Home/css/owl.carousel.min.css">
+	<link rel="stylesheet" href="../../Content/Home/css/owl.theme.default.min.css">
+	<!-- Magnific Popup -->
+	<link rel="stylesheet" href="../../Content/Home/css/magnific-popup.css">
+	<!-- Superfish -->
+	<link rel="stylesheet" href="../../Content/Home/css/superfish.css">
+	<!-- Easy Responsive Tabs -->
+	<link rel="stylesheet" href="../../Content/Home/css/easy-responsive-tabs.css">
+	<!-- Animate.css -->
+	<link rel="stylesheet" href="../../Content/Home/css/animate.css">
+	<!-- Theme Style -->
+	<link rel="stylesheet" href="../../Content/Home/css/style.css">
+   
+       
+	<!-- Modernizr JS -->
+	<script src="../../Content/Home/js/modernizr-2.6.2.min.js"></script>
+	 <!-- FOR IE9 below -->
+     @RenderSection("css", required: false)
+	<!--[if lt IE 9]>
+	<script src="../../Content/Home/../../Content/Home/js/respond.min.js"></script>
+	<![endif]-->
+
+
+	</head>
+	<body class="inner-page">
+
+		<!-- START #fh5co-header -->
+		<header id="fh5co-header-section" >
+			<div class="container">
+
+				<!-- <div id="fh5co-menu-logo"> -->
+					<!-- START #fh5co-logo -->
+					<h1 id="fh5co-logo" class="pull-left"><a href="index.html"><img src="../../Images/logo.png" /></a></h1>
+					
+					<!-- START #fh5co-menu-wrap -->
+					<nav id="fh5co-menu-wrap" role="navigation">
+						<ul class="sf-menu" id="fh5co-primary-menu">
+                            
+                            @{if(user==null)
+                              {
+                                <li @RenderSection("activeindex", required: false)>@Html.ActionLink("Home", "index", "Home")</li>
+                                <li @RenderSection("activelogin", required: false)>@Html.ActionLink("Login", "login","Home")</li>
+                                <li @RenderSection("activeregister", required: false)>@Html.ActionLink("Sign Up", "signup", "Home")</li>
+                                <li class="fh5co-special">@Html.ActionLink("upload", "upload", "Home")</li>  
+                              }
+                              
+                              else if (user.USERGROUP.Equals("Admin"))
+                              {
+                                <li class="active"><a>Welcome @user.NAME</a></li>
+                                <li @RenderSection("activeindex", required: false)>@Html.ActionLink("Home", "index", "Home")</li>
+                                <li @RenderSection("activelibrary", required: false)><a href="/library/album/@idalbum">Library</a></li>
+                                <li>@Html.ActionLink("Admincp", "admincp","Home")</li>
+                                <li>@Html.ActionLink("LogOut", "logout", "Home")</li>
+                                <li class="fh5co-special">@Html.ActionLink("upload", "upload", "Home")</li>                              
+                              }
+                              else{ 
+                                <li class="active"><a>Welcome @user.NAME</a></li>
+                                <li @RenderSection("activeindex", required: false)>@Html.ActionLink("Home", "index", "Home")</li>
+                                <li @RenderSection("activelibrary", required: false)><a href="/library/album/@idalbum">Library</a></li>
+                                <li>@Html.ActionLink("LogOut", "logout", "Home")</li>
+                                <li class="fh5co-special">@Html.ActionLink("upload", "upload", "Home")</li>
+                              }
+                             
+                            }
+						</ul>
+					</nav>
+				<!-- </div> -->
+			</div>
+		</header>
+        @RenderBody()
+        <footer>
+				
+				<div class="copyright" align="center">
+					Copyright © White 2016				</div>
+		</footer>
+        <!-- jQuery -->
+        <script src="../../Content/Home/js/jquery-1.10.2.min.js"></script>
+        <!-- jQuery Easing -->
+        <script src="../../Content/Home/js/jquery.easing.1.3.js"></script>
+        <!-- Bootstrap -->
+        <script src="../../Content/Home/js/bootstrap.js"></script>
+        <!-- Owl carousel -->
+        <script src="../../Content/Home/js/owl.carousel.min.js"></script>
+        <!-- Magnific Popup -->
+        <script src="../../Content/Home/js/jquery.magnific-popup.min.js"></script>
+        <!-- Superfish -->
+        <script src="../../Content/Home/js/hoverIntent.js"></script>
+        <script src="../../Content/Home/js/superfish.js"></script>
+        <!-- Easy Responsive Tabs -->
+        <script src="../../Content/Home/js/easyResponsiveTabs.js"></script>
+        <!-- FastClick for Mobile/Tablets -->
+        <script src="../../Content/Home/js/fastclick.js"></script>
+        <!-- Parallax -->
+        <script src="../../Content/Home/js/jquery.parallax-scroll.min.js"></script>
+        <!-- Waypoints -->
+        <script src="../../Content/Home/js/jquery.waypoints.min.js"></script>
+        <!-- Main JS -->
+        <script src="../../Content/Home/js/main.js"></script>
+        
+        
+    </body>
+</html>

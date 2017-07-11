@@ -1,0 +1,100 @@
+﻿@using PhotoManager.Models;
+@model PhotoManager.Models.ALBUM
+
+
+@{
+    PhotoEntities dc = new PhotoEntities();
+    ViewBag.Title = "Library";
+    var user = Session["User"] as USER;
+    int id = Model.IDALBUM;
+    var AlbumList = dc.ALBUMs.Where(s => s.IDUSER == user.IDUSER);
+  
+    
+    var ImageList = dc.IMAGEs.Where(s => s.IDALBUM == Model.IDALBUM);
+    var al = dc.ALBUMs.Single(l => l.IDALBUM == id);   
+      
+}
+@section activelibrary {
+    class ="active"
+        
+
+}
+<section>
+
+    <!-- End fh5co-arrow -->
+
+    <div class="row">
+
+        <div class="col-md-10 col-md-push-2" id="fh5co-content">
+            @using (Html.BeginForm("deleteImage", "Library", FormMethod.Post))
+{
+    <input type="hidden" name="idalbum" id="checkidimage" value="@id" >
+
+                <div align="right">
+                    <button type="submit" class="btn btn-danger waves-effect waves-circle waves-float">
+                        <i class="material-icons">delete </i>
+                    </button>
+                    <button type="button" class="btn bg-pink waves-effect waves-circle waves-float">
+                        <i class="material-icons">move_to_inbox</i>
+                    </button>
+                </div>
+                <h3 class="sidebar-heading"><span class="border"></span>Album : @al.NAMEALBUM</h3>
+                <div class="content-box animate-box fadeInUp animated">
+                    @{
+                        foreach (var s in ImageList)
+                        {
+                            <div class="col-md-4">
+                                <a href="~/library/image?id=@s.IDIMAGE" class="thumbnail">
+
+                                    <img src="~/Data/Thumbnails/@user.IDUSER/@s.NAMEIMAGE" class="img-responsive" alt="@s.IDIMAGE">
+
+                                </a>
+                                <input type="checkbox" name="checkidimage" id="@s.IDIMAGE" value="@s.IDIMAGE" class=" filled-in chk-col-pink"> <label for="@s.IDIMAGE">@s.TITLEIMAGE</label>
+
+
+                            </div>
+                        }
+                    }
+
+
+                </div>
+            }
+            <div class="col-md-4 col-md-pull-8" id="fh5co-sidebar">
+
+                <h3 class="sidebar-heading"><span class="border"></span>AlbumS
+                </h3>
+                <ul class="sidebar-links">
+                    <li><a href="/addalbum"><span>+ Create New Album </span></a></li>
+
+                    @{foreach (var s in AlbumList)
+                      {
+                          if (s.IDALBUM == id)
+                          {
+                              <li>
+                                  <a href="/library/album/@s.IDALBUM"><i class="material-icons">photo_album</i><span>@s.NAMEALBUM</span></a>
+                                  <a href="/library/editalbum/@s.IDALBUM">
+                                      <i class="material-icons">mode_edit</i>
+                                  </a>
+                              </li>
+
+                          }
+                          else
+                          {
+                              <li><a class="deactive" href="/library/album/@s.IDALBUM"><i class="material-icons">photo_album</i><span>@s.NAMEALBUM</span></a>
+                                  <a href="/library/editalbum/@s.IDALBUM">
+                                      <i class="material-icons">mode_edit</i>
+                                  </a></li>
+                          }
+                      }
+                    }
+
+                </ul>
+
+
+            </div>
+        </div>
+    </div>
+
+
+
+</section>

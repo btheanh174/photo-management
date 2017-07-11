@@ -1,0 +1,123 @@
+﻿
+@using PhotoManager.Models;
+@{
+    ViewBag.Title = "Upload";
+    var user = Session["User"] as USER;
+    PhotoEntities dc = new PhotoEntities();
+    
+    var AlbumList = dc.ALBUMs.Where(s => s.IDUSER == user.IDUSER);
+    
+}
+
+		<section>
+			
+        <!-- End fh5co-arrow -->
+		<div class="container hero" style="text-align:center">
+					<h1 class="heading">Upload Your Images</h1>
+		</div>
+			<div class="container">
+				<div class="col-md-8 col-md-offset-2">
+				
+						</div>
+					
+				</div>
+            <div class="row">
+
+                <div class="col-md-12 animate-box">
+                    <div id="fh5co-tab-feature-vertical" class="fh5co-tab">
+                        <ul class="resp-tabs-list hor_1">
+                            <li><i class="material-icons">computer</i> Computer</li>
+                            <li><i class="material-icons">link</i> URL</li>
+
+                        </ul>
+                        <div class="resp-tabs-container hor_1">
+                            <div>
+                                <div class="row">
+                                    <div class="col-md-3" align="right">
+                                        <p><h2 class="h3">Upload to:</h2></p>
+                                    </div>
+                                    @using (Html.BeginForm("Upload", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                                    {
+                                  
+                                            <div class="col-md-6" align="left">
+
+                                                <div class="form-group">
+                                                    <label for="gender" class="sr-only">Album</label>
+                                                    <select class="form-control input-lg" id="Album" name="Album">
+                                                        @foreach (var s in AlbumList)
+                                                        {
+
+                                                            <option value="@s.IDALBUM">@s.NAMEALBUM</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        
+
+                                        <div class="col-md-2" align="right">
+                                            <a href="addalbum" class="btn bg-deep-purple waves-effect">
+                                                <span class="glyphicon glyphicon-plus"></span> Add Album
+                                            </a>
+                                        </div>
+
+    <div class="col-md-8" align="right">
+        <input type="file" name="file" id="ImageData" class="btn btn-primary btn-lg bg-purple" onchange="fileCheck(this);" />
+    </div>
+     <div class="col-md-4">
+       <button type="submit" class="btn btn-primary btn-lg bg-purple"><i class="material-icons">cloud_upload</i> <span>Upload</span></button>
+    </div>
+                                    }
+                                </div>
+                            </div>
+                            <div>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="col-md-3" align="center">
+                                            <p><h2 class="h3">Upload to:</h2></p>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                            <div class="form-group">
+                                                <label for="gender" class="sr-only">Album</label>
+                                                <select class="form-control input-lg" id="Album" name="Album">
+                                                    @foreach (var s in AlbumList)
+                                                    {
+
+                                                        <option value="@s.IDALBUM">@s.NAMEALBUM</option>
+                                                    }
+                                                </select>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-1">
+                                            <button type="button" class="btn btn-default btn-sm">
+                                                <span class="glyphicon glyphicon-plus"></span> Add Album
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="col-md-9">
+
+                                            <label for="name" class="sr-only">URL</label>
+                                            <input placeholder="Paste URL to a photo" id="name" type="text" class="form-control input-lg">
+                                        </div>
+
+                                        <div class="col-md-3">
+
+                                            <p align="left"><button type="submit" class="btn btn-primary btn-lg bg-purple"><i class="material-icons">cloud_upload</i> <span>Upload</span></button></p>
+
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+			
+			
+		</section>

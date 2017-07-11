@@ -1,0 +1,52 @@
+@model PhotoManager.Models.ALBUM
+@{
+    ViewBag.Title = "AddAlbum";
+}
+
+		
+<section>
+
+    <!-- End fh5co-arrow -->
+
+
+    <div class="container">
+        <div class="col-md-12 animate-box">
+            <div class="row">
+                <div class="col-md-12 animate-box fadeInUp animated">
+                    <h1 class="fh5co-uppercase-heading-sm text-center">Add Album</h1>
+                    <div class="fh5co-spacer fh5co-spacer-sm"></div>
+                </div>
+                <div class="col-md-8 col-md-offset-2 animate-box fadeInUp animated">
+                @using (Html.BeginForm("addAlbum", "Home", FormMethod.Post))
+                {
+                    <form action="#" method="post">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name" class="sr-only">Name</label>
+                                @Html.TextBoxFor(u => u.NAMEALBUM, new { @placeholder="Name", @id="name", @type="text", @class="form-control input-lg" })
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="message" class="sr-only">Description</label>
+                                
+                                @Html.TextAreaFor(u => u.DESCRIPTION_,new{@placeholder="Description", @id="Description", @class="form-control input-lg", @rows="3"})
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary btn-lg " value="Add">
+                                <input type="reset" class="btn btn-outline btn-lg " value="Reset">
+                            </div>
+                        </div>
+                    </form>
+                    }
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>

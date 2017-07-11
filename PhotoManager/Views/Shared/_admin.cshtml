@@ -1,0 +1,352 @@
+﻿@using PhotoManager.Models;
+
+@{
+    var user = Session["User"] as USER;
+    PhotoEntities dc = new PhotoEntities();
+    
+    
+
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>Admin CP</title>
+    <!-- Favicon-->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&amp;subset=latin,cyrillic-ext" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" type="text/css">
+    <!-- Bootstrap Core Css -->
+    <link href="~/Content/Admin/plugins/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <!-- Waves Effect Css -->
+    <link href="~/Content/Admin/plugins/node-waves/waves.css" rel="stylesheet">
+    <!-- Animation Css -->
+    <link href="~/Content/Admin/plugins/animate-css/animate.css" rel="stylesheet">
+    <!-- Preloader Css -->
+    <link href="~/Content/Admin/plugins/material-design-preloader/md-preloader.css" rel="stylesheet">
+    
+    <!-- Custom Css -->
+    <link href="~/Content/Admin/css/style.css" rel="stylesheet">
+    <!-- AdminBSB Themes. You can choose a theme from css/themes instead of get all themes -->
+    <link href="~/Content/Admin/css/themes/all-themes.css" rel="stylesheet">
+    
+    @RenderSection("css", required: false)
+</head>
+<body class="theme-purple">
+    <!-- Page Loader -->
+    <div class="page-loader-wrapper" style="display: none;">
+        <div class="loader">
+            <div class="md-preloader pl-size-md">
+                <svg viewBox="0 0 75 75">
+                    <circle cx="37.5" cy="37.5" r="33.5" class="pl-red" stroke-width="4"></circle>
+                </svg>
+            </div>
+            <p>Please wait...</p>
+        </div>
+    </div>
+    <!-- #END# Page Loader -->
+    <!-- Overlay For Sidebars -->
+    <div class="overlay" style="display: none;"></div>
+    <!-- #END# Overlay For Sidebars -->
+    <!-- Search Bar -->
+    <div class="search-bar">
+        <div class="search-icon">
+            <i class="material-icons">search</i>
+        </div>
+        <input type="text" placeholder="START TYPING...">
+        <div class="close-search">
+            <i class="material-icons">close</i>
+        </div>
+    </div>
+    <!-- #END# Search Bar -->
+    <!-- Top Bar -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="javascript:void(0);" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false"></a>
+                <a href="javascript:void(0);" class="bars" style="display: none;"></a>
+                <a class="navbar-brand" href="index.html">Admin CP</a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <!-- Call Search -->
+                    <!-- #END# Call Search -->
+                    <li><a href="javascript:void(0);" class="js-search" data-close="true"><i class="material-icons">search</i></a></li>
+                    <!-- Notifications -->
+                    <!-- #END# Notifications -->
+                    <!-- Tasks -->
+
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- #Top Bar -->
+    <section>
+        <!-- Left Sidebar -->
+        <aside id="leftsidebar" class="sidebar">
+            <!-- User Info -->
+            <div class="user-info">
+                <div class="image">
+                    <img src="/images/user.png" width="48" height="48" alt="User">
+                </div>
+                <div class="info-container">
+                    <div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">@user.NAME</div>
+                    <div class="email">@user.MAIL</div>
+                    <div class="btn-group user-helper-dropdown">
+                        <i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+                        <ul class="dropdown-menu pull-right">
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">person</i>Profile</a></li>
+                            <li role="seperator" class="divider"></li>
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">group</i>Followers</a></li>
+                            <li></li>
+                            <li></li>
+                            <li role="seperator" class="divider"></li>
+                            <li><a href="javascript:void(0);" class=" waves-effect waves-block"><i class="material-icons">input</i>Sign Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- #User Info -->
+            <!-- Menu -->
+            <div class="menu">
+                <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 15px;">
+                    <ul class="list" style="height: 15px; overflow: hidden; width: auto;">
+                        <li class="header">MAIN NAVIGATION</li>
+                        <li>
+                            <a href="@Url.Action("index", "home" )" class="toggled waves-effect waves-block">
+                                <i class="material-icons">home</i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="active">
+                            <a href="@Url.Action("index", "admincp" )" class="toggled waves-effect waves-block">
+                                <i class="material-icons">dashboard</i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li>
+
+                        </li>
+                        <li>
+
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                <i class="material-icons">image</i>
+                                <span>Images</span>
+                            </a>
+                            <ul class="ml-menu" style="display: none;">
+                                <li>
+                                    <a href="@Url.Action("images", "admincp" )" class=" waves-effect waves-block">All Images</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("addimages", "admincp" )" class=" waves-effect waves-block">Add Image</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                <i class="material-icons">photo_album</i>
+                                <span>Album</span>
+                            </a>
+                            <ul class="ml-menu" style="display: none;">
+                                <li>
+                                    <a href="@Url.Action("album", "admincp" )" class=" waves-effect waves-block">All Albums</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("addalbum", "admincp" )"  class=" waves-effect waves-block">Add Album</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+
+
+                        </li>
+                        <li>
+                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                <i class="material-icons">face</i>
+                                <span>User</span>
+                            </a>
+                            <ul class="ml-menu" style="display: none;">
+                                <li>
+                                    <a href="@Url.Action("user", "admincp" )" class=" waves-effect waves-block">All Users</a>
+                                </li>
+                                <li>
+                                    <a href="@Url.Action("adduser", "admincp" )" class=" waves-effect waves-block">Add User</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li>
+
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="pages/medias/image-gallery.html" class=" waves-effect waves-block">Image Gallery</a>
+                                </li>
+                                <li>
+                                    <a href="pages/medias/carousel.html" class=" waves-effect waves-block">Carousel</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="pages/charts/morris.html" class=" waves-effect waves-block">Morris</a>
+                                </li>
+                                <li>
+                                    <a href="pages/charts/flot.html" class=" waves-effect waves-block">Flot</a>
+                                </li>
+                                <li>
+                                    <a href="pages/charts/chartjs.html" class=" waves-effect waves-block">ChartJS</a>
+                                </li>
+                                <li>
+                                    <a href="pages/charts/sparkline.html" class=" waves-effect waves-block">Sparkline</a>
+                                </li>
+                                <li>
+                                    <a href="pages/charts/jquery-knob.html" class=" waves-effect waves-block">Jquery Knob</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="pages/examples/sign-in.html" class=" waves-effect waves-block">Sign In</a>
+                                </li>
+                                <li>
+                                    <a href="pages/examples/sign-up.html" class=" waves-effect waves-block">Sign Up</a>
+                                </li>
+                                <li>
+                                    <a href="pages/examples/forgot-password.html" class=" waves-effect waves-block">Forgot Password</a>
+                                </li>
+                                <li>
+                                    <a href="pages/examples/blank.html" class=" waves-effect waves-block">Blank Page</a>
+                                </li>
+                                <li>
+                                    <a href="pages/examples/404.html" class=" waves-effect waves-block">404 - Not Found</a>
+                                </li>
+                                <li>
+                                    <a href="pages/examples/500.html" class=" waves-effect waves-block">500 - Server Error</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="pages/maps/google.html" class=" waves-effect waves-block">Google Map</a>
+                                </li>
+                                <li>
+                                    <a href="pages/maps/yandex.html" class=" waves-effect waves-block">YandexMap</a>
+                                </li>
+                                <li>
+                                    <a href="pages/maps/jvectormap.html" class=" waves-effect waves-block">jVectorMap</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+
+                            <ul class="ml-menu">
+                                <li>
+                                    <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                        <span>Menu Item</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                        <span>Menu Item - 2</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                        <span>Level - 2</span>
+                                    </a>
+                                    <ul class="ml-menu">
+                                        <li>
+                                            <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                                <span>Menu Item</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="javascript:void(0);" class="menu-toggle waves-effect waves-block">
+                                                <span>Level - 3</span>
+                                            </a>
+                                            <ul class="ml-menu">
+                                                <li>
+                                                    <a href="javascript:void(0);" class=" waves-effect waves-block">
+                                                        <span>Level - 4</span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+
+                        </li>
+
+                        <li>
+
+                        </li>
+                        <li>
+
+                        </li>
+                        <li>
+
+                        </li>
+                    </ul><div class="slimScrollBar" style="background: rgba(0, 0, 0, 0.498039); width: 4px; position: absolute; top: 0px; opacity: 0.4; display: none; border-radius: 0px; z-index: 99; right: 1px; height: 30px;"></div><div class="slimScrollRail" style="width: 4px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 0px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+                </div>
+            </div>
+            <!-- #Menu -->
+            <!-- Footer -->
+            <div class="legal">
+                <div class="copyright">
+                    © 2016 <a href="javascript:void(0);">White</a>.
+                </div>
+
+            </div>
+            <!-- #Footer -->
+        </aside>
+
+
+    </section>
+    <section class="content">
+        <div class="container-fluid">
+            @RenderBody()
+
+        </div>
+    </section>
+    <!-- Jquery Core Js -->
+    <script async="" src="https://www.google-analytics.com/analytics.js"></script>
+  
+    <script src="~/Content/Admin/plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap Core Js -->
+    <script src="~/Content/Admin/plugins/bootstrap/js/bootstrap.js"></script>
+    <!-- Select Plugin Js -->
+    <script src="~/Content/Admin/plugins/bootstrap-select/js/bootstrap-select.js"></script>
+    <!-- Slimscroll Plugin Js -->
+    <script src="~/Content/Admin/plugins/jquery-slimscroll/jquery.slimscroll.js"></script>
+    <!-- Waves Effect Plugin Js -->
+    <script src="~/Content/Admin/plugins/node-waves/waves.js"></script>
+    <!-- Jquery CountTo Plugin Js -->
+    <script src="~/Content/Admin/plugins/jquery-countto/jquery.countTo.js"></script>
+   
+   
+    <!-- Sparkline Chart Plugin Js -->
+    <script src="~/Content/Admin/plugins/jquery-sparkline/jquery.sparkline.js"></script>
+    <!-- Custom Js -->
+  
+    <script src="~/Content/Admin/js/admin.js"></script>
+    <script src="~/Content/Admin/js/pages/index.js"></script>
+    <!-- Demo Js -->
+    <script src="~/Content/Admin/js/demo.js"></script>
+    @RenderSection("js", required: false)
+</body>
+</html>

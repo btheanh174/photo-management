@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PhotoModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="ALBUM">
+    <Key>
+      <PropertyRef Name="IDALBUM" />
+    </Key>
+    <Property Name="IDALBUM" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDUSER" Type="varchar" MaxLength="30" />
+    <Property Name="NAMEALBUM" Type="nvarchar" MaxLength="50" />
+    <Property Name="DESCRIPTION_" Type="nvarchar" MaxLength="200" />
+  </EntityType>
+  <EntityType Name="IMAGE">
+    <Key>
+      <PropertyRef Name="IDIMAGE" />
+    </Key>
+    <Property Name="IDIMAGE" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="IDALBUM" Type="int" Nullable="false" />
+    <Property Name="NAMEIMAGE" Type="nvarchar" MaxLength="100" />
+    <Property Name="TITLEIMAGE" Type="nvarchar" MaxLength="100" />
+    <Property Name="DESCRIPTIONIMAGE" Type="nvarchar" MaxLength="100" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="IDUSER" />
+    </Key>
+    <Property Name="IDUSER" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="PASSWORD" Type="varchar" MaxLength="30" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="50" />
+    <Property Name="MAIL" Type="varchar" MaxLength="50" />
+    <Property Name="USERGROUP" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK_ALBUM_HAS_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="ALBUM" Type="Self.ALBUM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="IDUSER" />
+      </Principal>
+      <Dependent Role="ALBUM">
+        <PropertyRef Name="IDUSER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMAGE_HAS_2_ALBUM">
+    <End Role="ALBUM" Type="Self.ALBUM" Multiplicity="1" />
+    <End Role="IMAGE" Type="Self.IMAGE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ALBUM">
+        <PropertyRef Name="IDALBUM" />
+      </Principal>
+      <Dependent Role="IMAGE">
+        <PropertyRef Name="IDALBUM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PhotoModelStoreContainer">
+    <EntitySet Name="ALBUM" EntityType="Self.ALBUM" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="IMAGE" EntityType="Self.IMAGE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_ALBUM_HAS_USER" Association="Self.FK_ALBUM_HAS_USER">
+      <End Role="USER" EntitySet="USER" />
+      <End Role="ALBUM" EntitySet="ALBUM" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMAGE_HAS_2_ALBUM" Association="Self.FK_IMAGE_HAS_2_ALBUM">
+      <End Role="ALBUM" EntitySet="ALBUM" />
+      <End Role="IMAGE" EntitySet="IMAGE" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

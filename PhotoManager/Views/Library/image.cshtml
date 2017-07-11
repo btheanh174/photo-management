@@ -1,0 +1,107 @@
+﻿@using PhotoManager.Models;
+
+@{
+    ViewBag.Title = "Images";
+}
+
+@{
+    PhotoEntities dc = new PhotoEntities();
+    ViewBag.Title = "Image";
+    var user = Session["User"] as USER;
+    int id = 0;
+    var AlbumList = dc.ALBUMs.Where(s => s.IDUSER == user.IDUSER);
+
+    if (Request.QueryString["id"] != null)
+    {
+        id = Int32.Parse(Request.QueryString["id"].ToString());
+    }
+    else
+    {
+        Response.Redirect("Index", true);
+    }
+    bool kt = false;
+    foreach(var al in AlbumList)
+    {
+       kt = dc.IMAGEs.Any(a => a.IDALBUM == al.IDALBUM);
+       if(kt == true)
+       {
+           break;
+       }
+    }
+    if (kt == false)
+    {
+        Response.Redirect("Home/Index", true);
+    }
+
+    var img = dc.IMAGEs.Single(s => s.IDIMAGE == id);
+    
+}
+@section activelibrary {
+    class ="active"
+
+
+}
+<section>
+
+    <!-- End fh5co-arrow -->
+
+    <div class="row">
+        <div class="col-md-12 animate-box">
+
+            <div class="col-md-12 animate-box fadeInUp animated">
+                <h1 class="fh5co-uppercase-heading-sm text-center">Images</h1>
+                <div class="fh5co-spacer fh5co-spacer-sm"></div>
+            </div>
+
+                <div class="col-md-8">
+                    @using (Html.BeginForm("ImageUpload", "Home", FormMethod.Post))
+                    {
+
+                        <input id="id" name="id" type="hidden" value="@img.IDIMAGE">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span><img src="~/Data/Images/@user.IDUSER/@img.NAMEIMAGE" alt="Cinque Terre" style="max-width: 600px;" /></span>
+                                <span></span>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="name" class="sr-only">Name</label>
+                                <input placeholder="Name" id="name" name="name" value="@img.TITLEIMAGE" type="text" class="form-control input-lg">
+
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="message" class="sr-only">Description</label>
+                                <textarea placeholder="Description" name="Description" id="Description" class="form-control input-lg" rows="3">@img.DESCRIPTIONIMAGE</textarea>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <input type="submit" class="btn btn-primary btn-lg " value="Update">
+                            </div>
+                        </div>
+
+
+                    }
+
+                </div>
+                <div class="col-md-4">
+                    <h3>SHARE THIS PHOTO </h3>
+                    <label for="name">Email & IM</label> <input id="name" type="text" class="form-control " value="http://localhost:35100/Data/Images/@user.IDUSER/@img.NAMEIMAGE" readonly="readonly">
+                    <label for="name">HTML</label> <input id="name" type="text" class="form-control" value="<a href='http://localhost:35100/Data/Images/@user.IDUSER/@img.NAMEIMAGE' target='_blank'><img src='http://localhost:35100/Data/Images/@user.IDUSER/@img.NAMEIMAGE' border='0' alt='photo Rotom.png' /></a>" readonly="readonly">
+                    <label for="name">IMG</label> <input id="name" type="text" class="form-control" value="[IMG]http://localhost:35100/albums/m583/pokemonvn1/Avatar%20PKMVN/Rotom.png[/IMG]" readonly="readonly">
+
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+
+
+</section>

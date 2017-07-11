@@ -1,0 +1,65 @@
+@using PhotoManager.Models;
+@model PhotoManager.Models.IMAGE
+@{
+    ViewBag.Title = "Image Upload";
+    var user = Session["User"] as USER;
+  
+    PhotoEntities dc = new PhotoEntities();
+
+}
+
+		
+<section>
+
+    <!-- End fh5co-arrow -->
+
+
+    <div class="container">
+        <div class="col-md-12 animate-box">
+            <div class="row">
+                <div class="col-md-12 animate-box fadeInUp animated">
+                    <h1 class="fh5co-uppercase-heading-sm text-center">Add Album</h1>
+                    <div class="fh5co-spacer fh5co-spacer-sm"></div>
+                </div>
+                <div class="col-md-8 col-md-offset-2 animate-box fadeInUp animated">
+                @using (Html.BeginForm("ImageUpload", "Home", FormMethod.Post))
+                {
+                   
+                        <input id="id" name="id" type="hidden" value="@Model.IDIMAGE" >
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <span><img src="Data/Images/@user.IDUSER/@Model.NAMEIMAGE" alt="Cinque Terre" style="max-width: 600px;" /></span>
+                                <span></span>
+                            </div>
+                            </div>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label for="name" class="sr-only">Name</label>
+            <input placeholder="Name" id="name" name="name" type="text" class="form-control input-lg">
+
+        </div>
+    </div>
+
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label for="message" class="sr-only">Description</label>
+                                    <textarea placeholder="Description" name="Description" id="Description" class="form-control input-lg" rows="3"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-primary btn-lg " value="Add">
+                                    <input type="reset" class="btn btn-outline btn-lg " value="Reset">
+                                </div>
+                            </div>
+
+
+                }
+                    
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>

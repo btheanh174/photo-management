@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PhotoModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="ALBUM">
+    <Key>
+      <PropertyRef Name="IDALBUM" />
+    </Key>
+    <Property Name="IDALBUM" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDUSER" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="NAMEALBUM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DESCRIPTION_" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="USER" Relationship="Self.FK_ALBUM_HAS_USER" FromRole="ALBUM" ToRole="USER" />
+    <NavigationProperty Name="IMAGEs" Relationship="Self.FK_IMAGE_HAS_2_ALBUM" FromRole="ALBUM" ToRole="IMAGE" />
+  </EntityType>
+  <EntityType Name="IMAGE">
+    <Key>
+      <PropertyRef Name="IDIMAGE" />
+    </Key>
+    <Property Name="IDIMAGE" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IDALBUM" Type="Int32" Nullable="false" />
+    <Property Name="NAMEIMAGE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="TITLEIMAGE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="DESCRIPTIONIMAGE" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ALBUM" Relationship="Self.FK_IMAGE_HAS_2_ALBUM" FromRole="IMAGE" ToRole="ALBUM" />
+  </EntityType>
+  <EntityType Name="USER">
+    <Key>
+      <PropertyRef Name="IDUSER" />
+    </Key>
+    <Property Name="IDUSER" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="PASSWORD" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MAIL" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="USERGROUP" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="ALBUMs" Relationship="Self.FK_ALBUM_HAS_USER" FromRole="USER" ToRole="ALBUM" />
+  </EntityType>
+  <Association Name="FK_ALBUM_HAS_USER">
+    <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+    <End Role="ALBUM" Type="Self.ALBUM" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="USER">
+        <PropertyRef Name="IDUSER" />
+      </Principal>
+      <Dependent Role="ALBUM">
+        <PropertyRef Name="IDUSER" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_IMAGE_HAS_2_ALBUM">
+    <End Role="ALBUM" Type="Self.ALBUM" Multiplicity="1" />
+    <End Role="IMAGE" Type="Self.IMAGE" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="ALBUM">
+        <PropertyRef Name="IDALBUM" />
+      </Principal>
+      <Dependent Role="IMAGE">
+        <PropertyRef Name="IDALBUM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PhotoEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="ALBUMs" EntityType="Self.ALBUM" />
+    <EntitySet Name="IMAGEs" EntityType="Self.IMAGE" />
+    <EntitySet Name="USERs" EntityType="Self.USER" />
+    <AssociationSet Name="FK_ALBUM_HAS_USER" Association="Self.FK_ALBUM_HAS_USER">
+      <End Role="USER" EntitySet="USERs" />
+      <End Role="ALBUM" EntitySet="ALBUMs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_IMAGE_HAS_2_ALBUM" Association="Self.FK_IMAGE_HAS_2_ALBUM">
+      <End Role="ALBUM" EntitySet="ALBUMs" />
+      <End Role="IMAGE" EntitySet="IMAGEs" />
+    </AssociationSet>
+    <EntitySet Name="sysdiagrams" EntityType="PhotoModel.sysdiagram" />
+  </EntityContainer>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+</Schema>

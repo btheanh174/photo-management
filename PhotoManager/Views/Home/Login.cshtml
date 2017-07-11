@@ -1,0 +1,58 @@
+@model PhotoManager.Models.USER
+@{
+    ViewBag.Title = "Login";
+}
+@section activelogin {
+    class ="active"
+}
+
+
+
+
+		<section>
+			
+        <!-- End fh5co-arrow -->
+		
+			<div class="container">
+				<div class="col-md-12 animate-box">
+			<div class="row">
+			<div class="containerlg">
+  <div class="card"></div>
+  <div class="card">
+    <h1 class="title">Login</h1>
+      @using (Html.BeginForm("Login", "Home", FormMethod.Post))
+      {
+      @Html.AntiForgeryToken()
+        if (ViewData.ModelState.Keys.Any(k=> ViewData.ModelState[k].Errors.Any())) { 
+        <div class="alert alert-danger">
+            <button class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            @Html.ValidationSummary(false, "Errors: ")
+        </div>
+        }
+    <form>
+      <div class="input-containerlg">
+         @Html.TextBoxFor(u => u.IDUSER, new { @type = "username", @id ="Username", @required="required"})
+        <label for="Username">Username</label>
+        <div class="bar"></div>
+      </div>
+      <div class="input-containerlg">
+         @Html.TextBoxFor(u => u.PASSWORD, new { @type = "password", @id ="Password", @required="required"})
+        <label for="Password">Password</label>
+        <div class="bar"></div>
+      </div>
+      <div class="button-containerlg">
+        <button type="submit" value="login"><span>go</span></button>
+      </div>
+      <div class="footer"><a href="#">Forgot your password?</a></div>
+    </form>
+      }
+  </div>
+  
+</div>
+			</div>
+			</div>
+    </div>
+    
+			
+			
+		</section>
